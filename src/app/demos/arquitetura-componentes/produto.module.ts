@@ -8,6 +8,7 @@ import { ProdutoDetalheComponent } from "./componentes/produto-card-detalhe.comp
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { ProdutoCountComponent } from "./componentes/produto.count.component";
+import { ExcelService } from "./componentes/excel-service";
 registerLocaleData(localePt);
 
 @NgModule({
@@ -20,7 +21,8 @@ registerLocaleData(localePt);
         CommonModule,
         ProdutoRoutingModule
     ],
-    exports: []
+    exports: [],
+    providers: [ExcelService]
 })
 
 export class ProdutoModule{}
