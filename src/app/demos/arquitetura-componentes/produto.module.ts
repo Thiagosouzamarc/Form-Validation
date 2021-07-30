@@ -9,13 +9,17 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { ProdutoCountComponent } from "./componentes/produto.count.component";
 import { ExcelService } from "./componentes/excel-service";
+import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
+import { ProdutoAppComponent } from "./produtos.app.component";
 registerLocaleData(localePt);
 
 @NgModule({
     declarations: [
+        ProdutoAppComponent,
         ProdutoDashboardComponent,
         ProdutoDetalheComponent,
-        ProdutoCountComponent
+        ProdutoCountComponent,
+        EditarProdutoComponent
     ],
     imports: [
         CommonModule,
