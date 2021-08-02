@@ -11,6 +11,8 @@ import { ProdutoCountComponent } from "./componentes/produto.count.component";
 import { ExcelService } from "./componentes/excel-service";
 import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
 import { ProdutoAppComponent } from "./produtos.app.component";
+import { ProdutoService } from "./services/produtos.service";
+import { ProdutosResolve } from "./services/produto.resolve";
 registerLocaleData(localePt);
 
 @NgModule({
@@ -26,7 +28,7 @@ registerLocaleData(localePt);
         ProdutoRoutingModule
     ],
     exports: [],
-    providers: [ExcelService]
+    providers: [ExcelService, ProdutoService, ProdutosResolve]
 })
 
 export class ProdutoModule{}
