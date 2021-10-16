@@ -4,4 +4,4 @@ export interface Produto {
     ativo: boolean,
     valor: number,
     imagem: string
-}
+  }

@@ -1,19 +1,19 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChildren } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl, FormControlName } from '@angular/forms';
+
+import { Usuario } from './models/usuario';
 import { NgBrazilValidators } from 'ng-brazil';
-import { Usuario } from './models/usuarios';
 import { utilsBr } from 'js-brasil';
 import { CustomValidators } from 'ng2-validation';
-import { DisplayMessage, GenericValidator, ValidationMessages } from './generic-form-validation';
-import { fromEvent, merge, Observable } from 'rxjs';
+import { ValidationMessages, GenericValidator, DisplayMessage } from './generic-form-validation';
+import { Observable, fromEvent, merge } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styles: []
+  templateUrl: './cadastro.component.html'
 })
 export class CadastroComponent implements OnInit, AfterViewInit {
-
+  
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
   cadastroForm: FormGroup;
@@ -22,10 +22,13 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   MASKS = utilsBr.MASKS;
 
   validationMessages: ValidationMessages;
-  genericValitor: GenericValidator;
+  genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  mudancasNaoSalvas: boolean;
+
   constructor(private fb: FormBuilder) {
+    
     this.validationMessages = {
       nome: {
         required: 'O Nome é requerido',
@@ -34,7 +37,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
       },
       cpf: {
         required: 'Informe o CPF',
-        cpf: 'Cpf em formato inválido'
+        cpf: 'CPF em formato inválido'
       },
       email: {
         required: 'Informe o e-mail',
@@ -51,19 +54,19 @@ export class CadastroComponent implements OnInit, AfterViewInit {
       }
     };
 
-    this.genericValitor = new GenericValidator(this.validationMessages);
+    this.genericValidator = new GenericValidator(this.validationMessages);
    }
 
   ngOnInit() {
-    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
-    let senhaConfirmacao = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)]);
+    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6,15])]);
+    let senhaConfirm = new FormControl('', [Validators.required, CustomValidators.rangeLength([6,15]), CustomValidators.equalTo(senha)]);
 
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       cpf: ['', [Validators.required, NgBrazilValidators.cpf]],
       email: ['', [Validators.required, Validators.email]],
       senha: senha,
-      senhaConfirmacao: senhaConfirmacao
+      senhaConfirmacao: senhaConfirm
     });
   }
 
@@ -72,13 +75,20 @@ export class CadastroComponent implements OnInit, AfterViewInit {
     .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
 
     merge(...controlBlurs).subscribe(() => {
-      this.displayMessage = this.genericValitor.processarMensagens(this.cadastroForm);
-    })
+      this.displayMessage = this.genericValidator.processarMensagens(this.cadastroForm);
+      this.mudancasNaoSalvas = true;
+    });
   }
 
   adicionarUsuario() {
-    this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
-    this.formResult = JSON.stringify(this.cadastroForm.value);
-  }
+    if (this.cadastroForm.dirty && this.cadastroForm.valid) {
+      this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
+      this.formResult = JSON.stringify(this.cadastroForm.value);
 
+      this.mudancasNaoSalvas = false;
+    }
+    else {
+      this.formResult = "Não submeteu!!!"
+    }
+  }
 }

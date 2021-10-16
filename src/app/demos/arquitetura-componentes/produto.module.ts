@@ -1,19 +1,19 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { ProdutoRoutingModule } from "./produto.route";
-
-import { ProdutoDashboardComponent } from "./produto-dashboard/produto-dashboard.component";
-import { ProdutoDetalheComponent } from "./componentes/produto-card-detalhe.component";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { ProdutoCountComponent } from "./componentes/produto.count.component";
-import { ExcelService } from "./componentes/excel-service";
-import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
-import { ProdutoAppComponent } from "./produtos.app.component";
-import { ProdutoService } from "./services/produtos.service";
-import { ProdutosResolve } from "./services/produto.resolve";
 registerLocaleData(localePt);
+
+import { ProdutoDashboardComponent } from './produto-dashboard/produto-dashboard.component';
+import { ProdutoDetalheComponent } from './componentes/produto-card-detalhe.component';
+
+import { ProdutoRoutingModule } from './produto.route';
+import { ProdutoCountComponent } from './componentes/produto-count.component';
+import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
+import { ProdutoAppComponent } from './produto.app.component';
+import { ProdutoService } from './services/produto.service';
+import { ProdutosResolve } from './services/produto.resolve';
 
 @NgModule({
     declarations: [
@@ -27,8 +27,10 @@ registerLocaleData(localePt);
         CommonModule,
         ProdutoRoutingModule
     ],
-    exports: [],
-    providers: [ExcelService, ProdutoService, ProdutosResolve]
+    providers: [
+        ProdutoService,
+        ProdutosResolve
+    ],
+    exports: []
 })
-
-export class ProdutoModule{}
+export class ProdutoModule { }

@@ -1,16 +1,3 @@
-<!-- <button (click)="exportAsXLSX()"><i class="fa fa-file-excel-o" style="font-size:48px;color:blue"></i></button>
-<table id="table">
-	<tr>
-		<td>Eid</td>
-		<td>Ename</td>
-		<td>Esal</td>
-	</tr>
-	<tr *ngFor="let item of data">
-		<td>{{item.eid}}</td>
-		<td>{{item.ename}}</td>
-		<td>{{item.esal}}</td>
-	</tr>
-</table> -->
 <div style="padding-bottom: 30px;">
     <div class="card h-100">
         <div style="align-content:center;">
@@ -40,7 +27,7 @@
 
         <div class="card-footer">
             <a [ngClass]="produto.ativo ? 'btn btn-success' : 'btn btn-danger'" (click)="emitirEvento()" href="javascript:void(0)">
-                <span><span [ngClass]="produto.ativo ? 'fa fa-toggle-on' : 'fa fa-toggle-off'"></span>status</span>
+                <span><span [ngClass]="produto.ativo ? 'fa fa-toggle-on' : 'fa fa-toggle-off'"> </span> Status</span>
             </a>
             &nbsp;
             <a [routerLink]="['editar/',produto.id]" class="btn btn-primary">Editar</a>
